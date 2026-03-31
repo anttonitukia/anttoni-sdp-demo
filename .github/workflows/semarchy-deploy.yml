@@ -23,30 +23,30 @@ jobs:
 
       - name: Download and Install Semarchy Design CLI
         run: |
-          # Download the CLI package (adjust URL to your download location)
-          curl -L -o semarchy-cli.zip "${{ vars.SEMARCHY_CLI_DOWNLOAD_URL }}"
+          cd PlatformCLI
           
-          # Extract ZIP (but not the inner TGZ)
-          unzip -q semarchy-cli.zip
-
-          # List contents to debug
-          echo "📦 Contents after extraction:"
+          echo "📦 Extracting CLI for Linux x86_64..."
+          tar -xzf sem_linux_x86_64.tar.gz
+          
+          # Check what was extracted
           ls -la
           
-          # Find TGZ file (search more broadly)
-          TGZ_FILE=$(find . -name "*.tgz" -type f | head -n 1)
-          
-          if [ -z "$TGZ_FILE" ]; then
-            echo "❌ TGZ package not found"
-            echo "Searching in subdirectories:"
-            find . -type f -name "*.tgz" || echo "No .tgz files found anywhere"
-            echo "All files present:"
-            find . -type f
+          # If it's an executable
+          if [ -f "sem" ] || [ -f "sem-design" ]; then
+            BINARY=$(ls sem* | head -n 1)
+            echo "✅ Found CLI binary: $BINARY"
+            chmod +x "$BINARY"
+            sudo mv "$BINARY" /usr/local/bin/sem-design
+          # If it's a TGZ package for npm
+          elif [ -f "*.tgz" ]; then
+            TGZ_FILE=$(ls *.tgz | head -n 1)
+            echo "✅ Found NPM package: $TGZ_FILE"
+            npm install -g "$TGZ_FILE"
+          else
+            echo "❌ Unexpected file format"
+            ls -laR
             exit 1
           fi
-          
-          echo "✅ Found TGZ: $TGZ_FILE"
-          npm install -g "$TGZ_FILE"
           
           # Verify installation
           sem-design --help
