@@ -73,13 +73,13 @@ jobs:
       - name: Deploy to Data Management
         run: |
           sem-design dm data-location deploy \
-            --api-key ${{ secrets.SEMARCHY_API_KEY }} \
-            --client-id ${{ secrets.SEMARCHY_CLIENT_ID }} \
-            --client-secret ${{ secrets.SEMARCHY_CLIENT_SECRET }} \
-            --data-location ${{ vars.SEMARCHY_DATA_LOCATION }} \
-            --data-source ${{ vars.SEMARCHY_DATA_SOURCE }} \
-            --instance-url ${{ vars.SEMARCHY_INSTANCE_URL }} \
-            --root-folder ./
+            --root-folder ./src \
+            --instance-url "${{ vars.SEMARCHY_INSTANCE_URL }}" \
+            --api-key "${{ secrets.SEMARCHY_API_KEY }}" \
+            --client-id "${{ secrets.SEMARCHY_CLIENT_ID }}" \
+            --client-secret "${{ secrets.SEMARCHY_CLIENT_SECRET }}" \
+            --data-location "${{ vars.SEMARCHY_DATA_LOCATION }}" \
+            --data-source "${{ vars.SEMARCHY_DATA_SOURCE }}"
         
       - name: Check deployment status
         if: success()
