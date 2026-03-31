@@ -28,16 +28,24 @@ jobs:
           
           # Extract ZIP (but not the inner TGZ)
           unzip -q semarchy-cli.zip
+
+          # List contents to debug
+          echo "📦 Contents after extraction:"
+          ls -la
           
-          # Find and install the TGZ package
-          TGZ_FILE=$(find . -name "semarchy-sem-design-*.tgz" -type f | head -n 1)
+          # Find TGZ file (search more broadly)
+          TGZ_FILE=$(find . -name "*.tgz" -type f | head -n 1)
           
           if [ -z "$TGZ_FILE" ]; then
             echo "❌ TGZ package not found"
+            echo "Searching in subdirectories:"
+            find . -type f -name "*.tgz" || echo "No .tgz files found anywhere"
+            echo "All files present:"
+            find . -type f
             exit 1
           fi
           
-          echo "Installing $TGZ_FILE"
+          echo "✅ Found TGZ: $TGZ_FILE"
           npm install -g "$TGZ_FILE"
           
           # Verify installation
