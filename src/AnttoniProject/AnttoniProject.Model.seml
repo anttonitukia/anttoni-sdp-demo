@@ -1,0 +1,6 @@
+_type: Model
+_package: AnttoniProject
+_name: AnttoniProject
+label: Anttoni Project
+modelConfiguration:
+  type: POSTGRESQL

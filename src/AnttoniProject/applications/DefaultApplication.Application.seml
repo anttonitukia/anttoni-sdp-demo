@@ -1,0 +1,47 @@
+_package: AnttoniProject.applications
+_type: Application
+_name: DefaultApplication
+label: Anttoni Kikkailee
+visibility: VISIBLE
+applicationTitle: Anttoni Kikkailee
+avatarImageUrl: images://default/default-data-app-icon.svg
+logoUrl: images://default/semarchy-logo-navy.svg
+coverImageUrl: images://default/cover.png
+favIcon: images://default/dm-favicon.svg
+sortStrategy: POSITION
+historyBrowsingEnabled: false
+historyBrowsingRequiredRole: ""
+defaultAction: AnttoniProject.applications.DefaultApplication.Root
+documentationConfig:
+  documentation: ""
+globalSearchConfig:
+  displaySearchForDropdown: true
+  sortBusinessViewsAlphabetically: true
+navDrawer:
+  - _type: FolderNavGroup
+    _name: RootFolder
+    dividerVisible: false
+    labelVisible: false
+    linkedFolder: AnttoniProject.applications.DefaultApplication.Root
+rootFolder:
+  _type: FolderAction
+  _name: Root
+  label: Root Folder
+  image: images://mdi/folder.svg
+  imageAlign: MIDDLE_CENTER
+  imageMode: FIT
+  appActions:
+    - _type: GlobalSearchAction
+      _name: GlobalSearch
+      imageAlign: MIDDLE_CENTER
+      imageMode: FIT
+    - _type: MyTasksAction
+      _name: MyTasks
+      imageAlign: MIDDLE_CENTER
+      imageMode: FIT
+      badgeVisible: false
+    - _type: BrowseEntitiesFolderAction
+      _name: Entities
+      lineageEnabled: true
+      imageAlign: MIDDLE_CENTER
+      imageMode: FIT

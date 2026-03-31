@@ -1,0 +1,26 @@
+_package: AnttoniProject.Employee
+_type: Entity
+_name: Employee
+label: Employee
+pluralLabel: Employee
+entityType: BASIC
+physicalTableName: EMPLOYEE
+iconUrl: images://mdi/book.svg
+description: ""
+documentation: ""
+historizeGolden: false
+historizeMaster: false
+enableDelete: true
+attributes:
+  - _type: EntityAttribute
+    _name: EmployeeID
+    label: Employee ID
+    physicalName: EMPLOYEE_ID
+    dataType: LongInteger
+    precision: 38
+    mandatory: true
+    searchable: true
+sourceIdGeneration:
+  mode: SEQUENCE
+  startWith: 1
+primaryKey: AnttoniProject.Employee.Employee.EmployeeID
