@@ -32,11 +32,6 @@ jobs:
       - name: Authenticate with Semarchy
         run: |
           sem-design auth login ${{ vars.SEMARCHY_INSTANCE_URL }}
-        env:
-          # The CLI may need credentials passed via environment variables or stdin
-          SEMARCHY_API_KEY: ${{ secrets.SEMARCHY_API_KEY }}
-          SEMARCHY_CLIENT_ID: ${{ secrets.SEMARCHY_CLIENT_ID }}
-          SEMARCHY_CLIENT_SECRET: ${{ secrets.SEMARCHY_CLIENT_SECRET }}
 
       - name: Deploy to Data Management
         run: |
