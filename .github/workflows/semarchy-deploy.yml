@@ -41,16 +41,7 @@ jobs:
           # Check what was extracted
           ls
           
-          # If it's a TGZ package for npm
-          if [ -f "*.tgz" ]; then
-            TGZ_FILE=$(ls *.tgz | head -n 1)
-            echo "✅ Found NPM package: $TGZ_FILE"
-            npm install -g "$TGZ_FILE"
-          else
-            echo "❌ Unexpected file format"
-            ls -laR
-            exit 1
-          fi
+          npm install -g sem_linux_x86_64.tar.gz
           
           # Verify installation
           sem-design --help
