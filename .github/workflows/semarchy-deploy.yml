@@ -23,10 +23,10 @@ jobs:
 
       - name: Download and Install Semarchy Design CLI
         run: |
-          echo "📦 Installing Design CLI from repository..."
+          echo "Installing Design CLI from repository"
           npm install -g ./tools/semarchy-sem-design-*.tgz
           
-          echo "✅ Verifying installation..."
+          echo "Verifying installation"
           sem-design --version
 
       - name: Authenticate with Semarchy
@@ -36,7 +36,6 @@ jobs:
       - name: Deploy to Data Management
         run: |
           sem-design dm data-location deploy \
-            --api-key ${{ secrets.SEMARCHY_API_KEY }} \
             --client-id ${{ secrets.SEMARCHY_CLIENT_ID }} \
             --client-secret ${{ secrets.SEMARCHY_CLIENT_SECRET }} \
             --data-location ${{ vars.SEMARCHY_DATA_LOCATION }} \
