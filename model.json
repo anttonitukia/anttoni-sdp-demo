@@ -1,0 +1,195 @@
+{
+    "dataHubModelSchemaVersion": "1.1.0",
+    "dataHubModel": {
+        "qualifiedName": "AnttoniProject",
+        "label": "Anttoni Project",
+        "modelConfiguration": {
+            "type": "POSTGRESQL"
+        },
+        "retentionPolicy": {
+            "deletionsDuration": 0,
+            "deletionsType": "FOREVER",
+            "deletionsUnit": "DAY",
+            "historyDuration": 0,
+            "historyType": "FOREVER",
+            "historyUnit": "DAY",
+            "sourceDataDuration": 0,
+            "sourceDataType": "FOREVER",
+            "sourceDataUnit": "DAY",
+            "sourceErrorsDuration": 0,
+            "sourceErrorsType": "FOREVER",
+            "sourceErrorsUnit": "DAY"
+        },
+        "applications": [
+            {
+                "qualifiedName": "AnttoniProject.applications.DefaultApplication",
+                "activitiesSectionEnabled": true,
+                "applicationTitle": "Anttoni Kikkailee",
+                "avatarImageUrl": "images://default/default-data-app-icon.svg",
+                "certificationQueueEnabled": true,
+                "coverImageUrl": "images://default/cover.png",
+                "dashboardEnabled": true,
+                "dashboardScope": "MODEL",
+                "defaultAction": "AnttoniProject.applications.DefaultApplication.Root",
+                "entitiesListEnabled": true,
+                "errorsNavigationEnabled": true,
+                "favIcon": "images://default/dm-favicon.svg",
+                "historyBrowsingEnabled": false,
+                "historyBrowsingRequiredRole": "",
+                "homeSectionEnabled": true,
+                "lineageEnabled": true,
+                "logoUrl": "images://default/semarchy-logo-navy.svg",
+                "visibility": "VISIBLE",
+                "label": "Anttoni Kikkailee",
+                "sortStrategy": "POSITION",
+                "documentationConfig": {
+                    "documentation": ""
+                },
+                "globalSearchConfig": {
+                    "displaySearchForDropdown": true,
+                    "sortBoViewsAlphabetically": true
+                },
+                "navigationConfig": {
+                    "navigationGroups": [
+                        {
+                            "qualifiedName": "AnttoniProject.applications.DefaultApplication.RootFolder",
+                            "_type": "FolderNavigationGroup",
+                            "dividerVisible": false,
+                            "labelVisible": false,
+                            "position": 0,
+                            "underlyingFolder": "AnttoniProject.applications.DefaultApplication.Root"
+                        }
+                    ]
+                },
+                "abstractAppActions": [
+                    {
+                        "qualifiedName": "AnttoniProject.applications.DefaultApplication.Root",
+                        "_type": "FolderAction",
+                        "useCustomLabel": true,
+                        "image": "images://mdi/folder.svg",
+                        "imageAlign": "MIDDLE_CENTER",
+                        "imageMode": "FIT",
+                        "label": "Root Folder"
+                    },
+                    {
+                        "qualifiedName": "AnttoniProject.applications.DefaultApplication.Root.GlobalSearch",
+                        "posInFolder": 0,
+                        "parentFolder": "AnttoniProject.applications.DefaultApplication.Root",
+                        "_type": "GlobalSearchAction",
+                        "useCustomLabel": false,
+                        "imageAlign": "MIDDLE_CENTER",
+                        "imageMode": "FIT"
+                    },
+                    {
+                        "qualifiedName": "AnttoniProject.applications.DefaultApplication.Root.MyTasks",
+                        "posInFolder": 1,
+                        "parentFolder": "AnttoniProject.applications.DefaultApplication.Root",
+                        "_type": "MyTasksAction",
+                        "useCustomLabel": false,
+                        "imageAlign": "MIDDLE_CENTER",
+                        "imageMode": "FIT",
+                        "badgeVisible": false
+                    },
+                    {
+                        "qualifiedName": "AnttoniProject.applications.DefaultApplication.Root.Entities",
+                        "posInFolder": 2,
+                        "parentFolder": "AnttoniProject.applications.DefaultApplication.Root",
+                        "_type": "BrowseEntitiesFolderAction",
+                        "useCustomLabel": false,
+                        "imageAlign": "MIDDLE_CENTER",
+                        "imageMode": "FIT",
+                        "lineageEnabled": true
+                    }
+                ]
+            }
+        ],
+        "complexTypes": [],
+        "sqlFunctions": [],
+        "databaseViews": [],
+        "enricherCaches": [],
+        "lovTypes": [],
+        "modelDiagrams": [],
+        "modelEditionVariables": [],
+        "modelJobs": [],
+        "modelPrivGrants": [
+            {
+                "qualifiedName": "AnttoniProject.model_priv_grants.semarchyAdmin",
+                "allowApiPublishingAsUser": true,
+                "dataAdminRole": true,
+                "integrationWsRole": true,
+                "label": "semarchy Admin",
+                "roleName": "semarchyAdmin"
+            }
+        ],
+        "namedQueries": [],
+        "publishers": [],
+        "referenceRels": [],
+        "userDefinedTypes": [],
+        "workflows": [],
+        "entities": [
+            {
+                "qualifiedName": "AnttoniProject.Employee.Employee",
+                "dataEntryAllowed": true,
+                "historizeGolden": false,
+                "historizeMaster": false,
+                "description": "",
+                "documentation": "",
+                "enableDelete": true,
+                "entityType": "BASIC",
+                "iconUrl": "images://mdi/book.svg",
+                "label": "Employee",
+                "physicalTableName": "EMPLOYEE",
+                "pluralLabel": "Employee",
+                "pkAttributes": [
+                    {
+                        "qualifiedName": "AnttoniProject.Employee.Employee.EmployeeID",
+                        "_type": "PKAttribute",
+                        "abstractAtomicType": "LongInteger",
+                        "goldenAttribute": true,
+                        "i18ned": false,
+                        "mandatory": true,
+                        "multiValued": false,
+                        "physicalColName": "EMPLOYEE_ID",
+                        "valueSeparator": "",
+                        "idGenerationType": "SEQUENCE",
+                        "idSequenceStartsWith": 1,
+                        "label": "Employee ID",
+                        "precision": 38,
+                        "searchable": true
+                    }
+                ],
+                "atomicAttributes": [],
+                "complexAttributes": [],
+                "abstractRowCheckConstraints": [],
+                "actionSets": [],
+                "businessObjectViews": [],
+                "collections": [],
+                "displayCards": [
+                    {
+                        "qualifiedName": "AnttoniProject.Employee.display_cards.Employee",
+                        "avatarImageValueInterpreter": "LITERAL",
+                        "default": true,
+                        "primaryImageFallbackValueInterpreter": "LITERAL",
+                        "primaryImageValueInterpreter": "LITERAL",
+                        "avatarImageAlign": "MIDDLE_CENTER",
+                        "avatarImageMode": "FIT",
+                        "avatarImageSourceType": "URL",
+                        "primaryImageAlign": "MIDDLE_CENTER",
+                        "primaryImageFallbackSourceType": "URL",
+                        "primaryImageMode": "FIT",
+                        "primaryImageSourceType": "URL",
+                        "primaryTextExpression": "EmployeeID"
+                    }
+                ],
+                "dupsManagers": [],
+                "enrichers": [],
+                "forms": [],
+                "searchForms": [],
+                "steppers": [],
+                "survivorshipRules": [],
+                "uniqueKeys": [],
+                "fuzzyLookupRules": []
+            }
+        ]
+    }
+}
