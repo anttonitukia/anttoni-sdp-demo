@@ -29,7 +29,13 @@ jobs:
           # Extract ZIP (but not the inner TGZ)
           unzip -q semarchy-cli.zip
 
-               # Find the TGZ package
+          # List contents to debug
+          echo "📦 Contents after extraction:"
+          ls -la
+          
+          cd PlatformCLI
+          
+          # Find the TGZ package
           TGZ_FILE=$(find . -name "semarchy-sem-design-*.tgz" -type f | head -n 1)
           
           if [ -z "$TGZ_FILE" ]; then
