@@ -39,7 +39,7 @@ jobs:
           tar -xzf sem_linux_x86_64.tar.gz
           
           # Check what was extracted
-          ls -la
+          ls
           
           # If it's a TGZ package for npm
           if [ -f "*.tgz" ]; then
