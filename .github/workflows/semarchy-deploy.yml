@@ -37,11 +37,6 @@ jobs:
           SEMARCHY_API_KEY: ${{ secrets.SEMARCHY_API_KEY }}
           SEMARCHY_CLIENT_ID: ${{ secrets.SEMARCHY_CLIENT_ID }}
           SEMARCHY_CLIENT_SECRET: ${{ secrets.SEMARCHY_CLIENT_SECRET }}
-          
-
-      - name: Build Semarchy Model
-        run: |
-          sem-design dm data-location build --root-folder ./src
 
       - name: Deploy to Data Management
         run: |
