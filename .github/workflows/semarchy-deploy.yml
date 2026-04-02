@@ -29,10 +29,6 @@ jobs:
           echo "Verifying installation"
           sem-design --version
 
-      - name: Authenticate with Semarchy
-        run: |
-          sem-design auth login ${{ vars.SEMARCHY_INSTANCE_URL }}
-
       - name: Deploy to Data Management
         run: |
           sem-design dm data-location deploy \
