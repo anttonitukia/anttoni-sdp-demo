@@ -35,17 +35,22 @@ jobs:
           
           cd PlatformCLI
           
-          # Find the TGZ package
-          TGZ_FILE=$(find . -name "semarchy-sem-design-*.tgz" -type f | head -n 1)
+          echo "📦 Extracting CLI for Linux x86_64..."
+          tar -xzf sem_linux_x86_64.tar.gz
           
-          if [ -z "$TGZ_FILE" ]; then
-            echo "❌ Design CLI TGZ not found"
+          # Check what was extracted
+          ls -la
+          
+          # If it's a TGZ package for npm
+          if [ -f "*.tgz" ]; then
+            TGZ_FILE=$(ls *.tgz | head -n 1)
+            echo "✅ Found NPM package: $TGZ_FILE"
+            npm install -g "$TGZ_FILE"
+          else
+            echo "❌ Unexpected file format"
             ls -laR
             exit 1
           fi
-          
-          echo "✅ Installing $TGZ_FILE"
-          npm install -g "$TGZ_FILE"
           
           # Verify installation
           sem-design --help
@@ -58,9 +63,7 @@ jobs:
           SEMARCHY_API_KEY: ${{ secrets.SEMARCHY_API_KEY }}
           SEMARCHY_CLIENT_ID: ${{ secrets.SEMARCHY_CLIENT_ID }}
           SEMARCHY_CLIENT_SECRET: ${{ secrets.SEMARCHY_CLIENT_SECRET }}
-          INSTANCE_URL: ${{ vars.SEMARCHY_INSTANCE_URL }}
-          DATA_LOCATION: ${{ vars.SEMARCHY_DATA_LOCATION }}
-          DATA_SOURCE: ${{ vars.SEMARCHY_DATA_SOURCE }}
+          
 
       - name: Build Semarchy Model
         run: |
