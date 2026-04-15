@@ -4,10 +4,14 @@ on:
   push:
     branches:
       - main
+      - test
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    # Automatically select environment based on branch
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'test' }}
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     
