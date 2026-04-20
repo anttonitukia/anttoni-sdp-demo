@@ -1,0 +1,34 @@
+_package: AnttoniProject.entities.LastNames
+_type: Entity
+_name: LastNames
+label: Last Names
+pluralLabel: Last Names
+physicalTableName: LAST_NAMES
+iconUrl: images://mdi/book.svg
+description: ""
+documentation: ""
+historizeGolden: false
+historizeMaster: false
+enableDelete: true
+attributes:
+  - _type: EntityAttribute
+    _name: LastNamesID
+    label: Last Names ID
+    physicalName: LAST_NAMES_ID
+    dataType: LongInteger
+    precision: 38
+    mandatory: true
+    searchable: true
+  - _type: EntityAttribute
+    _name: LastName
+    label: Last Name
+    physicalName: LAST_NAME
+    dataType: String
+    length: 255
+    mandatory: false
+    searchable: true
+sourceIdGeneration:
+  mode: SEQUENCE
+  startWith: 1
+primaryKey: AnttoniProject.entities.LastNames.LastNames.LastNamesID
+entityType: BASIC

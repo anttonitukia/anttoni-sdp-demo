@@ -1,4 +1,4 @@
-name: Deploy Semarchy Data Project
+name: Deploy Semarchy
 
 on:
   push:

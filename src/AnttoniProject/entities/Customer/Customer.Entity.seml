@@ -1,0 +1,41 @@
+_package: AnttoniProject.entities.Customer
+_type: Entity
+_name: Customer
+label: Customer
+pluralLabel: Customer
+physicalTableName: CUSTOMER
+iconUrl: images://mdi/book.svg
+description: ""
+documentation: ""
+historizeGolden: false
+historizeMaster: false
+enableDelete: true
+attributes:
+  - _type: EntityAttribute
+    _name: CustomerID
+    label: Customer ID
+    physicalName: CUSTOMER_ID
+    dataType: LongInteger
+    precision: 38
+    mandatory: true
+    searchable: true
+  - _type: EntityAttribute
+    _name: FirstName
+    label: First Name
+    physicalName: FIRST_NAME
+    dataType: String
+    length: 255
+    mandatory: false
+    searchable: true
+  - _type: EntityAttribute
+    _name: LastName
+    label: Last Name
+    physicalName: LAST_NAME
+    dataType: String
+    length: 255
+    mandatory: false
+sourceIdGeneration:
+  mode: SEQUENCE
+  startWith: 1
+primaryKey: AnttoniProject.entities.Customer.Customer.CustomerID
+entityType: BASIC

@@ -1,0 +1,16 @@
+_name: LastNames
+_package: AnttoniProject.entities.LastNames.display_cards
+_type: DisplayCard
+entity: AnttoniProject.entities.LastNames.LastNames
+default: true
+primaryTextExpression: LastName
+primaryImageValueInterpreter: LITERAL
+primaryImageSourceType: URL
+primaryImageAlign: MIDDLE_CENTER
+primaryImageMode: FIT
+primaryImageFallbackValueInterpreter: LITERAL
+primaryImageFallbackSourceType: URL
+avatarImageValueInterpreter: LITERAL
+avatarImageSourceType: URL
+avatarImageAlign: MIDDLE_CENTER
+avatarImageMode: FIT
