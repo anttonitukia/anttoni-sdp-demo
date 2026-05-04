@@ -24,6 +24,61 @@ jobs:
         with:
           node-version: 'lts/*'
 
+      # Add Java setup for Flyway
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Set up SSH key
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Create SSH tunnel
+      - name: Create SSH tunnel to database
+        run: |
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh -f -N -L ${{ vars.LOCAL_PORT }}:${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }} \
+            -p ${{ secrets.SSH_PORT || 22 }} \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+          sleep 3
+          echo "✅ SSH tunnel established"
+
+      # Test tunnel connection
+      - name: Test SSH tunnel
+        run: |
+          nc -zv localhost ${{ vars.LOCAL_PORT }} || echo "⚠️ Warning: Tunnel test failed"
+
+      # Install Flyway CLI
+      - name: Install Flyway
+        run: |
+          wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/10.10.0/flyway-commandline-10.10.0-linux-x64.tar.gz | tar -xvz
+          sudo ln -s $(pwd)/flyway-10.10.0/flyway /usr/local/bin/flyway
+          flyway --version
+
+      # Run Flyway migrations through SSH tunnel
+      - name: Run Flyway migrations
+        run: |
+          flyway \
+            -url="jdbc:postgresql://localhost:${{ vars.LOCAL_PORT }}/${{ secrets.DB_NAME }}" \
+            -user="${{ secrets.DB_USER }}" \
+            -password="${{ secrets.DB_PASSWORD }}" \
+            -locations="filesystem:./migrations" \
+            -baselineOnMigrate=true \
+            migrate
+        env:
+          FLYWAY_EDITION: community
+
+      # Close SSH tunnel
+      - name: Close SSH tunnel
+        if: always()
+        run: |
+          pkill -f "ssh -f -N -L ${{ vars.LOCAL_PORT }}" || echo "No tunnel to close"
+          echo "✅ SSH tunnel closed"
+
       - name: Download and Install Semarchy Design CLI
         run: |
           echo "Installing Design CLI from repository"
@@ -49,5 +104,4 @@ jobs:
       - name: Handle deployment failure
         if: failure()
         run: |
-          echo "❌ Deployment failed - check logs above"
-          exit 1
+          echo "❌ Deployment failed"
