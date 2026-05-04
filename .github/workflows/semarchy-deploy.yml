@@ -37,42 +37,71 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            # Create SSH tunnel
+            # Create SSH tunnel with detailed error logging
       - name: Create SSH tunnel to database
+        id: ssh_tunnel
         run: |
-          # Add SSH host to known_hosts
+          # Don't exit on error immediately - we want to see what happens
+          set +e
+          
+          echo "Step 1: Adding SSH host to known_hosts..."
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
           
-          # Test SSH connection first
-          echo "Testing SSH connection..."
-          ssh -v -o ConnectTimeout=10 \
+          echo "Step 2: Testing SSH connection..."
+          SSH_OUTPUT=$(ssh -v \
+            -o ConnectTimeout=10 \
             -o ServerAliveInterval=60 \
             -o MACs=hmac-sha2-256 \
+            -o StrictHostKeyChecking=no \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            "echo 'SSH connection successful'" || {
-              echo "❌ SSH connection failed"
-              exit 1
-            }
+            "echo 'SSH connection successful'" 2>&1)
+          SSH_EXIT_CODE=$?
           
-          # Create SSH tunnel
-          echo "Creating SSH tunnel..."
-          ssh -f -N \
+          echo "$SSH_OUTPUT"
+          
+          if [ $SSH_EXIT_CODE -eq 0 ]; then
+            echo "✅ SSH connection test passed"
+          else
+            echo "❌ SSH connection failed with exit code: $SSH_EXIT_CODE"
+            echo "Full SSH debug output above ^"
+            exit 1
+          fi
+          
+          echo "Step 3: Creating SSH tunnel..."
+          echo "  Local port: ${{ vars.LOCAL_PORT }}"
+          echo "  Remote host: ${{ secrets.DB_HOST }}"
+          echo "  Remote port: ${{ secrets.DB_PORT }}"
+          
+          # Create tunnel and capture output
+          TUNNEL_OUTPUT=$(ssh -v -f -N \
             -o ServerAliveInterval=60 \
             -o MACs=hmac-sha2-256 \
             -o ExitOnForwardFailure=yes \
+            -o StrictHostKeyChecking=no \
             -L ${{ vars.LOCAL_PORT }}:${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }} \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 2>&1)
+          TUNNEL_EXIT_CODE=$?
+          
+          echo "$TUNNEL_OUTPUT"
+          
+          if [ $TUNNEL_EXIT_CODE -ne 0 ]; then
+            echo "❌ SSH tunnel creation failed with exit code: $TUNNEL_EXIT_CODE"
+            exit 1
+          fi
           
           # Wait for tunnel to establish
           sleep 5
           
           # Verify tunnel is running
-          if pgrep -f "ssh -f -N" > /dev/null; then
+          if pgrep -f "ssh.*-L.*${{ vars.LOCAL_PORT }}" > /dev/null; then
             echo "✅ SSH tunnel established"
+            ps aux | grep ssh | grep -v grep
           else
-            echo "❌ SSH tunnel failed to start"
+            echo "❌ SSH tunnel process not found"
+            ps aux | grep ssh | grep -v grep || echo "No SSH processes running"
             exit 1
           fi
+
 
 
       # Test tunnel connection
